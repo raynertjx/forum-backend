@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+    include ActionController::Cookies
     before_action :authorized
 
     # secret should be ENV variable in production!
@@ -27,7 +28,7 @@ class ApplicationController < ActionController::API
             @user = User.find_by(id: user_id)
         end
     end
-
+    
     def logged_in?
         !!logged_in_user
     end
