@@ -24,11 +24,12 @@ module ForumBackend
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
   end
+end
 
-  module CookieMonster
-    class Application < Rails::Application
-      config.load_defaults 6.0
-      config.api_only = true
-      config.middleware.use ActionDispatch::Cookies
-    end
+module CookieMonster
+  class Application < Rails::Application
+    config.load_defaults 6.0
+    config.api_only = true
+    config.middleware.use ActionDispatch::Cookies
+  end
 end
