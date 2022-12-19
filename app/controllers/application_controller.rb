@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::API
     include ActionController::Cookies
-    before_action :authorized
 
     # secret should be ENV variable in production!
     def encode_token(payload)
@@ -12,13 +11,19 @@ class ApplicationController < ActionController::API
     end
 
     def decode_token
-        if auth_header
-            token = auth_header.split(' ')[1]
-            begin
-                JWT.decode(token, 'secret', true, algorithm: 'HS256')
-            rescue JWT::DecodeError
-                nil
-            end
+        begin
+            token = cookies.signed[:jwt]
+            JWT.decode(token, 'secret', true, algorithm: 'HS256')
+        rescue JWT::DecodeError
+            nil
+        end
+    end
+
+    def whoami
+        if logged_in_user
+            render json: {user_id: logged_in_user.id, username: logged_in_user.username }
+        else
+            head(:unauthorized)
         end
     end
 
