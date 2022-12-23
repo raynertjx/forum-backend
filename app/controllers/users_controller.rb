@@ -2,13 +2,12 @@ class UsersController < ApplicationController
 
     # signing up user
     def create
-        @user = User.create(user_params)
-        if @user.valid?
-            token = encode_token({user_id: @user.id})
-            cookies.signed[:jwt] = {value: token, httponly: true, expires: 1.hour.from_now}
-            render json: {user: @user, token: token}
-        else
-            render json: {error: "Invalid username or password"}
+        @user = User.new(user_params)
+        if @user.save
+            render json: @user, status: :created
+          else
+            render json: { errors: @user.errors.full_messages },
+                   status: :unprocessable_entity
         end
     end
 
@@ -20,7 +19,7 @@ class UsersController < ApplicationController
             cookies.signed[:jwt] = {value: token, httponly: true, expires: 1.hour.from_now}
             render json: {user: @user, token: token}
         else
-            render json: {error: "Invalid username or password"}
+            head(:unauthorized)
         end
     end
 
@@ -31,6 +30,6 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.permit(:username, :password)
+        params.permit(:username, :password, :password_confirmation)
     end
 end
