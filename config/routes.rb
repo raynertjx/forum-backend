@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     resources :forum_threads
     resources :users, only: [:create]
     post '/login', to: "users#login"
-    get '/auto_login', to: "users#auto_login"
+    post '/signup', to: "users#create"
+    post '/logout', to: "users#logout"
+    get '/whoami', to: "application#whoami"
   end
 end
