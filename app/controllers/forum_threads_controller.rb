@@ -5,7 +5,6 @@ class ForumThreadsController < ApplicationController
   # GET /forum_threads
   def index
     @forum_threads = ForumThread.all
-
     render json: @forum_threads
   end
 
@@ -18,7 +17,7 @@ class ForumThreadsController < ApplicationController
   def create
     @forum_thread = ForumThread.new(forum_thread_params)
     @forum_thread.user_id = @user.id
-
+    @forum_thread.username = @user.username
     if @forum_thread.save
       render json: @forum_thread, status: :created, location: @forum_thread
     else
@@ -48,6 +47,6 @@ class ForumThreadsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def forum_thread_params
-      params.require(:forum_thread).permit(:title, :content, :user_id)
+      params.permit(:title, :content, :category, :user_id).except(:username, :user_id)
     end
 end
