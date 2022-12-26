@@ -1,6 +1,7 @@
 class ForumThreadsController < ApplicationController
   before_action :set_forum_thread, only: %i[ show update destroy ]
   before_action :authorized
+  before_action :owner?, only: %i[edit destroy]
 
   # GET /forum_threads
   def index
@@ -43,6 +44,12 @@ class ForumThreadsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_forum_thread
       @forum_thread = ForumThread.find(params[:id])
+    end
+
+    def owner?
+      unless @user.id == @forum_thread.user_id
+        redirect_back fallback_location: root_path, notice: 'User is not owner'
+      end
     end
 
     # Only allow a list of trusted parameters through.
