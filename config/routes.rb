@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   Rails.application.routes.draw do
     resources :forum_threads
     resources :users, only: [:create]
+    get '/index_category/:category', to: "forum_threads#index_category"
     post '/login', to: "users#login"
     post '/signup', to: "users#create"
     post '/logout', to: "users#logout"

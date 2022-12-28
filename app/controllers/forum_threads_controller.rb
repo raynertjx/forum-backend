@@ -9,6 +9,12 @@ class ForumThreadsController < ApplicationController
     render json: @forum_threads
   end
 
+  # GET threads from a specific forum category
+  def index_category
+    @forum_threads = ForumThread.all.select { |thread| thread.category == params[:category]}
+    render json: @forum_threads
+  end
+
   # GET /forum_threads/1
   def show
     render json: @forum_thread
