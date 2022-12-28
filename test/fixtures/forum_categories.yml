@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  latest_thread: MyString
+  comments_count: MyString
+  number: MyString
+
+two:
+  name: MyString
+  latest_thread: MyString
+  comments_count: MyString
+  number: MyString
