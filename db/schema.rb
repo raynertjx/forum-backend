@@ -10,17 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_28_144738) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_28_151126) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "forum_categories", force: :cascade do |t|
     t.string "name"
     t.string "latest_thread"
-    t.string "comments_count"
-    t.string "number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "thread_count"
+    t.string "url"
+    t.string "subtitle"
   end
 
   create_table "forum_threads", force: :cascade do |t|
