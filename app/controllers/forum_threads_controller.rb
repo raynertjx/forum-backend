@@ -11,7 +11,7 @@ class ForumThreadsController < ApplicationController
 
   # GET threads from a specific forum category
   def index_category
-    @forum_threads = ForumThread.all.select { |thread| thread.category == params[:category]}
+    @forum_threads = ForumThread.all.select { |thread| thread.forum_category_id == Integer(params[:forum_category_id])}
     render json: @forum_threads
   end
 
@@ -60,6 +60,6 @@ class ForumThreadsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def forum_thread_params
-      params.permit(:title, :content, :category, :user_id).except(:username, :user_id)
+      params.permit(:title, :content, :forum_category_id).except(:username, :user_id)
     end
 end
