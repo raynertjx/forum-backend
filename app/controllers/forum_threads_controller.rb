@@ -1,6 +1,6 @@
 class ForumThreadsController < ApplicationController
   before_action :set_forum_thread, only: %i[ show update destroy ]
-  before_action :authorized, except: %i[index_category, index]
+  before_action :authorized, except: %i[index_category index]
   before_action :owner?, only: %i[edit destroy]
 
   # GET /forum_threads
