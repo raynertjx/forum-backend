@@ -1,6 +1,6 @@
 class ForumCommentsController < ApplicationController
   before_action :set_forum_comment, only: %i[ show update destroy ]
-  before_action :authorized
+  before_action :authorized, except: %i[index_thread, index]
   before_action :owner?, only: %i[edit destroy]
 
   # GET /forum_comments
