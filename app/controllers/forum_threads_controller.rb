@@ -43,6 +43,10 @@ class ForumThreadsController < ApplicationController
 
   # DELETE /forum_threads/1
   def destroy
+    @comments = ForumComment.all.select { |comment| comment.forum_thread_id == @forum_thread.id}
+    if @comments
+      @comments.each{ |comment| comment.destroy}
+    end
     @forum_thread.destroy
   end
 
