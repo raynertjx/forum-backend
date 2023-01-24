@@ -35,14 +35,10 @@ class ApplicationController < ActionController::API
     end
     
     def logged_in?
-        if !!logged_in_user
-            render json: {message: 'You are logged in!'}
-        else
-            render json: {message: 'Please log in!'}, status: :unauthorized 
-        end
+        !!logged_in_user
     end
 
-    # def authorized
-    #     render json: {message: 'Please log in!'}, status: :unauthorized unless logged_in?
-    # end
+    def authorized
+        render json: {message: 'Please log in!', status: :unauthorized } unless logged_in?
+    end
 end
