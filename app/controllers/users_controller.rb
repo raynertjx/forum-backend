@@ -16,7 +16,7 @@ class UsersController < ApplicationController
         @user = User.find_by(username: params[:username])
         if @user && @user.authenticate(params[:password])
             token = encode_token({user_id: @user.id})
-            cookies.signed[:jwt] = {value: token, httponly: true, expires: 1.hour.from_now}
+            cookies.signed[:jwt] = {value: token, httponly: true, expires: 6.hour.from_now}
             render json: {user: @user, token: token}
         else
             head(:unauthorized)
