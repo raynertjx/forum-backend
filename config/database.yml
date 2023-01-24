@@ -83,4 +83,5 @@ production:
   <<: *default
   database: forum_backend_production
   username: forum_backend
-  password: <%= ENV['DATABASE_URL'] %>
+  password: <%= ENV["FORUM_BACKEND_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
