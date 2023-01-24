@@ -59,7 +59,7 @@ class ForumCommentsController < ApplicationController
 
     def owner?
       unless @user.id == @forum_comment.user_id
-        redirect_back fallback_location: root_path, notice: 'User is not owner'
+        redirect_back fallback_location: logout_path, notice: 'User is not owner'
       end
     end
 
