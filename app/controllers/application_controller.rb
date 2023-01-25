@@ -10,14 +10,25 @@ class ApplicationController < ActionController::API
         request.headers['Authorization']
     end
 
+    # def decode_token
+    #     begin
+    #         token = cookies.signed[:jwt]
+    #         JWT.decode(token, SECRET_KEY, true, algorithm: 'HS256')
+    #     rescue JWT::DecodeError
+    #         nil
+    #     end
+    # end
+
     def decode_token
-        begin
-            token = cookies.signed[:jwt]
-            JWT.decode(token, SECRET_KEY, true, algorithm: 'HS256')
-        rescue JWT::DecodeError
-            nil
+        if auth_header
+            token = auth_header.split(' ')[1]
+            begin
+              JWT.decode(token, SECRET_KEY, true, algorithm: 'HS256')
+            rescue JWT::DecodeError
+              nil
+            end
+          end
         end
-    end
 
     def whoami
         if logged_in_user
