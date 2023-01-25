@@ -1,9 +1,9 @@
 class ApplicationController < ActionController::API
     include ActionController::Cookies
-
+    SECRET_KEY = Rails.application.secret_key_base
     # secret should be ENV variable in production!
     def encode_token(payload)
-        JWT.encode(payload, 'secret')
+        JWT.encode(payload, SECRET_KEY)
     end
 
     def auth_header
@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
     def decode_token
         begin
             token = cookies.signed[:jwt]
-            JWT.decode(token, 'secret', true, algorithm: 'HS256')
+            JWT.decode(token, SECRET_KEY, true, algorithm: 'HS256')
         rescue JWT::DecodeError
             nil
         end
@@ -34,11 +34,11 @@ class ApplicationController < ActionController::API
         end
     end
     
-    # def logged_in?
-    #     logged_in_user
-    # end
+    def logged_in?
+        !!logged_in_user
+    end
 
-    # def authorized
-    #     render json: {message: 'Please log in!'}, status: :unauthorized unless !!logged_in_user
-    # end
+    def authorized
+        render json: {message: 'Please log in!'}, status: :unauthorized unless logged_in?
+    end
 end
